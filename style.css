@@ -1,0 +1,190 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    background-color: #000;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+    position: relative;
+}
+
+.galaxia-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    cursor: grab;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Fondo estrellado - sin cambios */
+.galaxia-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 80px 70px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 50px 150px, #ddd, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 120px 200px, #eee, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 180px 100px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 240px 160px, #ddd, rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 300px 300px;
+    animation: mover-estrellas 200s linear infinite;
+    opacity: 0.8;
+}
+
+.galaxia-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(1.5px 1.5px at 150px 50px, #fff, rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 250px 120px, #eee, rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 300px 30px, #ddd, rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 400px 400px;
+    animation: mover-estrellas-lento 300s linear infinite reverse;
+    opacity: 0.7;
+}
+
+.galaxia {
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.flor-3d {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150px; 
+    height: 150px;
+    transform: translate(-50%, -50%) translateZ(0);
+    transform-style: preserve-3d;
+}
+
+.petalo {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #FFD700;
+    border-radius: 50%;
+    box-shadow: 
+        0 0 30px #FFD700, 
+        0 0 60px #FFA500, 
+        0 0 100px #FF4500;
+}
+
+/* Rotamos cada pétalo para crear la forma de la flor */
+.petalo:nth-child(1) { transform: rotate(0deg); }
+.petalo:nth-child(2) { transform: rotate(45deg); }
+.petalo:nth-child(3) { transform: rotate(90deg); }
+.petalo:nth-child(4) { transform: rotate(135deg); }
+.petalo:nth-child(5) { transform: rotate(180deg); }
+.petalo:nth-child(6) { transform: rotate(225deg); }
+.petalo:nth-child(7) { transform: rotate(270deg); }
+.petalo:nth-child(8) { transform: rotate(315deg); }
+
+
+.planeta {
+    position: absolute;
+    padding: 8px 15px;
+    border-radius: 20px;
+    background-color: rgba(255, 105, 180, 0.15);
+    box-shadow: 0 0 10px rgba(255, 105, 180, 0.9),
+                0 0 20px rgba(255, 105, 180, 0.7);
+    white-space: nowrap;
+    backface-visibility: hidden;
+    color: #FFC0CB;
+    transform-style: preserve-3d;
+    transform: translateZ(0);
+}
+
+.planeta span {
+    display: inline-block;
+    font-size: 0.9em;
+    text-shadow: 0 0 5px rgba(255, 105, 180, 0.8);
+    transform-style: preserve-3d;
+}
+
+/* Nuevos estilos para los botones de zoom */
+.controles-zoom {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+}
+
+.controles-zoom button {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    font-size: 2em;
+    padding: 5px 15px;
+    margin: 5px 0;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.controles-zoom button:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+@keyframes mover-estrellas {
+    from { background-position: 0 0; }
+    to { background-position: 10000px 5000px; }
+}
+
+@keyframes mover-estrellas-lento {
+    from { background-position: 0 0; }
+    to { background-position: 8000px 4000px; }
+}
+
+@keyframes rotacion3Dtotal {
+    from { transform: translate(-50%, -50%) rotateX(0deg) rotateY(0deg); }
+    to { transform: translate(-50%, -50%) rotateX(360deg) rotateY(360deg); }
+}
+
+/* Media query para dispositivos móviles */
+@media (max-width: 600px) {
+    .flor-3d {
+        width: 100px;
+        height: 100px;
+    }
+    .planeta {
+        padding: 6px 12px;
+        border-radius: 15px;
+    }
+    .planeta span {
+        font-size: 0.8em;
+    }
+    .controles-zoom {
+        bottom: 10px;
+        right: 10px;
+    }
+    .controles-zoom button {
+        font-size: 1.5em;
+        width: 40px;
+        height: 40px;
+    }
+}
